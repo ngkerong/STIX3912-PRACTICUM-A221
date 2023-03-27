@@ -95,8 +95,36 @@ function previewFile() {
     }
 }
 
+
 function confirmDialog() {
     var r = confirm("Register this staff?");
+    if (r == true) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function confirmDialog2() {
+    var r = confirm("Update this staff?");
+    if (r == true) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function confirmDialog3() {
+    var r = confirm("Update your profile?");
+    if (r == true) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function confirmDialog4() {
+    var r = confirm("Update the password?");
     if (r == true) {
         return true;
     }else{
