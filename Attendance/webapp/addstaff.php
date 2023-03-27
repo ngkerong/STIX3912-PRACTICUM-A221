@@ -5,7 +5,7 @@
         echo "<script> window.location.replace('login.php')</script>";
     }
 
-    if ($_SESSION["type"] != "admin"){
+    if ($_SESSION["type"] != "Admin"){
         echo "<script>alert('Session not available. Only admin enter.'); </script>";
         echo "<script> window.history.back()</script>";
     }
@@ -22,11 +22,11 @@
             $typeuser = $_POST["typeuser"];
             $address = $_POST["address"];
             $password = sha1($_POST["pass"]);
-            $sqlregister = "INSERT INTO `tbl_staff`(`name`, `icno`, `pemail`, `cemail`, `phone`, `depart`, `type`, `password`, `address`) VALUES('$name', '$icno', '$pemail', '$cemail', '$phone', '$depart', '$typeuser', '$password', '$address')";
+            $sqlregister = "INSERT INTO `tbl_staff`(`name`, `icno`, `pemail`, `cemail`, `phone`, `depart`, `type`, `password`, `address`, `status`) VALUES('$name', '$icno', '$pemail', '$cemail', '$phone', '$depart', '$typeuser', '$password', '$address', 'active')";
 
             try {
                 $conn->exec($sqlregister);
-                uploadImage($name);
+                uploadImage($icno);
                 echo "<script>alert('Registration Success')</script>";
                 echo "<script>window.location.replace('staff.php')</script>";
             } catch (PDOException $e) {
@@ -35,9 +35,9 @@
     }
 }
 
-    function uploadImage($name) {
+    function uploadImage($icno) {
         $target_dir = "image/staff/";
-        $target_file = $target_dir . $name . ".png";
+        $target_file = $target_dir . $icno . ".png";
         move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
     }
 
@@ -62,7 +62,7 @@
 
         <div>
             <?php
-                if ($_SESSION["type"] == "admin"){
+                if ($_SESSION["type"] == "Admin"){
                     include 'nav.php';
                 }
             ?>
