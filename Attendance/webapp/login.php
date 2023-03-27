@@ -3,17 +3,24 @@
         include 'dbconnect.php';
         $email = $_POST["email"];
         $password = sha1($_POST["password"]);
-        $stmt = $conn->prepare("SELECT * FROM register_user WHERE email = '$email' AND password = '$password'");
+        $stmt = $conn->prepare("SELECT * FROM tbl_staff WHERE cemail = '$email' AND password = '$password'");
         $stmt->execute();
         $number_of_rows = $stmt->fetch(PDO::FETCH_ASSOC);
-        $updatelogin = "UPDATE register_user SET lastlogin = now()";
+        $updatelogin = "UPDATE tbl_staff SET lastlogin = now()";
 
-        if($number_of_rows > 0){
+        if($number_of_rows > 0 && $number_of_rows['status'] == "active"){
             session_start();
             $_SESSION["sessionid"] = session_id();
-            $_SESSION["email"] = $number_of_rows['email'];
-            $_SESSION["password"] = $number_of_rows['password'];
+            $_SESSION["icno"] = $number_of_rows['icno'];
+            $_SESSION["name"] = $number_of_rows['name'];
+            $_SESSION["pemail"] = $number_of_rows['pemail'];
+            $_SESSION["cemail"] = $number_of_rows['cemail'];
+            $_SESSION["phone"] = $number_of_rows['phone'];
+            $_SESSION["depart"] = $number_of_rows['depart'];
             $_SESSION["type"] = $number_of_rows['type'];
+            $_SESSION["status"] = $number_of_rows['status'];
+            $_SESSION["password"] = $number_of_rows['password'];
+            $_SESSION["address"] = $number_of_rows['address'];
             $conn->exec($updatelogin);
             echo "<script>alert('Login Success'); </script>";
             echo "<script> window.location.replace('index.php')</script>";
